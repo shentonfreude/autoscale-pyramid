@@ -1,4 +1,5 @@
 import platform
+import logging
 
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
@@ -11,19 +12,16 @@ def metadata(request):
     return _metadata()
 
 def _factorial(number):
-    # TODO: Should sanity check number < 1 and raise Exception
+    # TODO: sanity check number < 1 and raise Exception
     # Recursive solution exceeded max depth between 500 and 1000, iterate.
     result = number
     for n in range (2, number):
         result *= n
     return result
 
-    # TODO return JSON view
-
 def factorial(request):
     # TODO: Sanity check number is int
     number = int(request.matchdict['number'])
-    #return Response('Factorial of %d is %d' % (number, _factorial(number)))
     md = _metadata()
     md.update({'number': number, 'factorial': _factorial(number)})
     return md
@@ -31,15 +29,13 @@ def factorial(request):
 def _squareroot(number):
     # Newton's method
     DELTA = 1e-16
-    prev = 1.0
-    z = 1.0
     steps = 0
-    while True:
-        z -= (z * z - number) / (2 * z)
-        if abs(prev - z) < DELTA:
-            break
+    prev = 0                    # anything but z
+    z = 1.0
+    while abs(prev - z) > DELTA:
         prev = z
         steps += 1
+        z -= (z * z - number) / (2 * z)
     return z, steps
 
 def squareroot(request):
