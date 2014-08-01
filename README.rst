@@ -39,3 +39,14 @@ For the second attempt, create an Ubuntu instance and manually update
 the OS, install the prerequisites and code on the system. Then burn an
 AMI from this.  Configure the Launch Config to use this AMI.  Is there
 anything the User Data needs to do?
+
+
+How this hierarchy was created, run
+==============================
+
+Create virtualenv.
+bin/pcreate -s starter autoscaletest
+bin/python setup.py develop
+[hack autoscaletest to contain your app]
+bin/pserve autoscaletest/development.ini 
+
