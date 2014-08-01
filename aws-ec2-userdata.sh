@@ -1,4 +1,5 @@
 #!/bin/bash
+# See AWS EC2 instance /var/log/cloud-init[-output].log
 echo `date` RUNNING USER DATA
 
 # Ubuntu 14.04 has python-2.7

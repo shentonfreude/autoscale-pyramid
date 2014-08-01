@@ -28,7 +28,7 @@ def factorial(request):
 
 def _squareroot(number):
     # Newton's method
-    DELTA = 1e-16
+    DELTA = 1e-9
     steps = 0
     prev = 0                    # anything but z
     z = 1.0
