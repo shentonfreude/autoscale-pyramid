@@ -53,7 +53,7 @@ def hello_world(request):
     md.update({'msg': 'Hello %(name)s!' % request.matchdict})
     return md
 
-if __name__ == '__main__':
+def main(global_config, **settings):
     config = Configurator()
 
     config.add_route('home',       '/')
@@ -69,10 +69,13 @@ if __name__ == '__main__':
     config.add_view(hello_world, route_name='hello')
 
     app = config.make_wsgi_app()
+    return app
+
+
+# Invoke as $virtualenv/bin/python autoscaletest/__init__.py
+
+if __name__ == '__main__':
+    app = main(None)
     server = make_server('0.0.0.0', 8080, app)
     server.serve_forever()
-
-# invoke as .../bin/python app.py
-
-
 
