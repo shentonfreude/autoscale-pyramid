@@ -1,9 +1,9 @@
 #!/bin/bash -x
-# -x shows what's executing
+# Runs as 'root' in '/'
 
 # See AWS EC2 instance /var/log/cloud-init[-output].log
 echo "######################################################################"
-echo `date` RUNNING USER DATA
+echo `date` RUNNING USER DATA AS USER `whoami` IN DIR `pwd`
 
 # Ubuntu 14.04 has python-2.7
 apt-get update -y
@@ -21,7 +21,7 @@ cd autoscale-pyramid
 # since AWS doesn't let us edit the User Data. Do this as ubuntu user.
 echo "## Invoke the build and run scripts..."
 su ubuntu -c "cd ~ubuntu/autoscale-pyramid && ./build.sh"
-# Should run in background or AWS init might never complete?
+# Best to run server in background
 su ubuntu -c "cd ~ubuntu/autoscale-pyramid && ./run.sh"
 
 echo `date` FINISHED USER DATA AND BUILDING / RUNNING
